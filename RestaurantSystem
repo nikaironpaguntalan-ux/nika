@@ -1,0 +1,65 @@
+// File: RestaurantSystem.java
+import java.util.*;
+
+public class RestaurantSystem {
+    private static Map<String, Double> menu = new HashMap<>();
+    private static List<String> orders = new ArrayList<>();
+
+    public static void main(String[] args) {
+        // Initialize menu
+        menu.put("Burger", 120.0);
+        menu.put("Pizza", 250.0);
+        menu.put("Pasta", 180.0);
+        menu.put("Coke", 50.0);
+
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+
+        System.out.println("=== Welcome to Nika's Restaurant ===");
+
+        while (running) {
+            System.out.println("\nMenu:");
+            for (Map.Entry<String, Double> item : menu.entrySet()) {
+                System.out.println(item.getKey() + " - ₱" + item.getValue());
+            }
+
+            System.out.println("\nOptions:");
+            System.out.println("1. Place Order");
+            System.out.println("2. View Orders");
+            System.out.println("3. Exit");
+
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // consume newline
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter item name: ");
+                    String item = scanner.nextLine();
+                    if (menu.containsKey(item)) {
+                        orders.add(item);
+                        System.out.println(item + " added to your order.");
+                    } else {
+                        System.out.println("Item not found!");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Your Orders:");
+                    double total = 0;
+                    for (String order : orders) {
+                        System.out.println(order + " - ₱" + menu.get(order));
+                        total += menu.get(order);
+                    }
+                    System.out.println("Total: ₱" + total);
+                    break;
+                case 3:
+                    running = false;
+                    System.out.println("Thank you for visiting!");
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
+            }
+        }
+        scanner.close();
+    }
+}
